@@ -25,8 +25,9 @@
         h1 {
             font-family: 'Carter One', cursive;
             text-align: center;
+            letter-spacing: 15px;
             color: white;
-            font-size: 1.8rem;
+            font-size: 2rem;
             text-transform: uppercase;
             text-shadow: 0 1px 0 #efefef,
                 0 2px 0 #efefef,
@@ -83,6 +84,8 @@
             text-decoration: none;
             margin-top: 10px;
             color: #eb4d4b;
+
+            
         }
 
         button.btn {
@@ -101,6 +104,11 @@
 
             letter-spacing: 0.125rem;
             word-spacing: 0.2rem;
+            text-shadow: 0 1px 0 #efefef,
+                0 2px 0 #efefef,
+                0 3px 0 #efefef,
+                0 4px 0 #efefef,
+                0 30px 5px rgba(0, 0, 0, .1);
         }
 
         .hidden {
@@ -113,9 +121,7 @@
 
 <body>
 
-
     <header>
-
         <h1> Scramble Game</h1>
     </header>
 
@@ -124,18 +130,21 @@
             <h3 class="msg"> </h3>
             <input type="text" class="hidden">
             <button class="btn"> Click here to start </button>
-
         </div>
     </section>
 
     <script>
+
         const msg = document.querySelector('.msg');
         const guess = document.querySelector('input');
         const btn = document.querySelector('.btn');
+
         let play = false;
+
         let words = ['PHP', 'TypeScript', 'Scala', 'Shell', 'PowerShell', 'Perl', 'Haskell', 'Kotlin', 'Visual', 'Basic', 'NET', 'SQL', 'Delphi', 'MATLAB', 'Groovy', 'Lua', 'Rust', 'Ruby', 'HTML', 'and', 'CSS', 'Python', 'Java', 'JavaScript', 'Swift', 'C++', 'Golang'];
-        let scramWord = '';
-        let randWord = '';
+
+        let scramWord = "";
+        let randWord = "";
 
         const createRandomWords = () => {
             let rNum = Math.floor(Math.random() * words.length);
@@ -150,7 +159,7 @@
             for (let i = arr.length - 1; i >= 0; i--) {
                 let temp = arr[i];
                 let j = Math.floor(Math.random() * (i * 1));
-                console.log(i,j,temp);
+                console.log(i, j, temp);
 
                 arr[i] = arr[j]
                 arr[j] = temp;
@@ -160,9 +169,6 @@
 
         }
 
-
-
-
         btn.addEventListener('click', function () {
 
             if (!play) {
@@ -170,30 +176,25 @@
                 btn.innerHTML = "Guess";
                 guess.classList.toggle('hidden');
                 randWord = createRandomWords();
-                scramWord = scramblrwords(randWord.split("").join(""));
+                scramWord = scramblrwords(randWord.split("")).join("");
                 console.log(scramWord);
-                msg.innerHTML = `Predict the word: ${scramWord}`;
+                msg.innerHTML = `Arrange the word: ${scramWord}`;
             } else {
                 if (guess.value == randWord) {
                     play = false;
                     msg.innerHTML = `Congratulations..It's correct. it is ${randWord}`;
                     btn.innerHTML = "Start Again";
+                    guess.value = "";
                     guess.classList.toggle('hidden');
-                    msg.value = "";
+                    
                 }
                 else {
                     msg.innerHTML = `Sorry..! It is not correct. Please try again ${scramWord}`;
 
-
                 }
-
             }
-
         })
     </script>
-
-
-
 </body>
 
 </html>
