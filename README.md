@@ -20,7 +20,7 @@ Scramble Game is a fun and engaging word puzzle game where players are presented
 ## Installation and Setup
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/scramble-game.git
+   git clone https://github.com/eka-lark/Scramble-Game.git
    ```
 2. **Navigate to the Project Directory:**
    ```bash
