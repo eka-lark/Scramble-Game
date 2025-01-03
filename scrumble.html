@@ -8,192 +8,170 @@
     <title>Scramble Game</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Carter+One&display=swap" rel="stylesheet">
-
     <style>
+        /* General styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Header styles */
         header {
             width: 100%;
             background-color: #20bf6b;
-            line-height: 15vh;
+            text-align: center;
+            padding: 2rem 0;
         }
 
         h1 {
             font-family: 'Carter One', cursive;
-            text-align: center;
-            letter-spacing: 15px;
             color: white;
             font-size: 2rem;
             text-transform: uppercase;
-            text-shadow: 0 1px 0 #efefef,
-                0 2px 0 #efefef,
-                0 3px 0 #efefef,
-                0 4px 0 #efefef,
-                0 30px 5px rgba(0, 0, 0, .1);
+            letter-spacing: 15px;
+            text-shadow: 0 1px 0 #efefef, 0 2px 0 #efefef, 0 3px 0 #efefef, 0 4px 0 #efefef, 0 30px 5px rgba(0, 0, 0, 0.1);
         }
 
+        /* Main game area */
         section {
-            height: 85vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 85vh;
             background-color: #7bed9f;
         }
 
-        .gameArea {
-
+        .game-container {
             width: 50%;
-            height: 400px;
-            padding: 20px 0;
+            max-width: 600px;
+            padding: 2rem;
             background-color: #2ed573;
+            border-radius: 10px;
+            box-shadow: 0 8px 6px -6px black;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            box-shadow: 0 8px 6px -6px black;
+            text-align: center;
         }
 
         h3 {
-            text-align: center;
             font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         input {
-            width: 40%;
-            padding: 15px;
-            text-align: center;
+            width: 80%;
+            padding: 10px;
             border-radius: 25px;
             outline: none;
-            border: none;
+            border: 1px solid #ccc;
             background-color: #dff9fb;
-            color: black;
-            margin: 2rem 0;
-            font-size: 1.1rem;
-
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         button {
             font-size: 1rem;
-            cursor: pointer;
-            outline: none;
-            border: #2f3542;
-            text-decoration: none;
-            margin-top: 10px;
+            padding: 0.8rem 1.5rem;
             color: #eb4d4b;
-
-            
-        }
-
-        button.btn {
-            font-weight: 600;
-            padding: 1rem 2rem;
             background: white;
-            text-transform: uppercase;
-            transition-property: all;
-            transition-duration: 0.5s;
-            transition-timing-function: cubic-bezier(0.65, -0.25, 0.25, 1.95);
+            border: 2px solid #eb4d4b;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        button.btn:hover,
-        button.btn:focus,
-        button.btn:active {
-
-            letter-spacing: 0.125rem;
-            word-spacing: 0.2rem;
-            text-shadow: 0 1px 0 #efefef,
-                0 2px 0 #efefef,
-                0 3px 0 #efefef,
-                0 4px 0 #efefef,
-                0 30px 5px rgba(0, 0, 0, .1);
+        button:hover {
+            background: #eb4d4b;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
 
         .hidden {
             display: none;
         }
     </style>
-
-
 </head>
 
 <body>
 
     <header>
-        <h1> Scramble Game</h1>
+        <h1>Scramble Game</h1>
     </header>
 
     <section>
-        <div class="gameArea">
-            <h3 class="msg"> </h3>
-            <input type="text" class="hidden">
-            <button class="btn"> Click here to start </button>
+        <div class="game-container">
+            <h3 id="message"></h3>
+            <input type="text" id="user-guess" class="hidden" placeholder="Type your guess here">
+            <button id="game-btn">Click here to Start</button>
         </div>
     </section>
 
     <script>
+        // Game Elements
+        const messageEl = document.getElementById("message");
+        const inputEl = document.getElementById("user-guess");
+        const buttonEl = document.getElementById("game-btn");
 
-        const msg = document.querySelector('.msg');
-        const guess = document.querySelector('input');
-        const btn = document.querySelector('.btn');
+        let isPlaying = false;
+        let originalWord = "";
+        let scrambledWord = "";
 
-        let play = false;
+        // Word List
+        const words = [
+            'PHP', 'TypeScript', 'Scala', 'Shell', 'PowerShell', 'Perl', 'Haskell', 'Kotlin',
+            'Visual', 'Basic', '.NET', 'SQL', 'Delphi', 'MATLAB', 'Groovy', 'Lua', 'Rust',
+            'Ruby', 'HTML', 'CSS', 'Python', 'Java', 'JavaScript', 'Swift', 'C++', 'Golang'
+        ];
 
-        let words = ['PHP', 'TypeScript', 'Scala', 'Shell', 'PowerShell', 'Perl', 'Haskell', 'Kotlin', 'Visual', 'Basic', 'NET', 'SQL', 'Delphi', 'MATLAB', 'Groovy', 'Lua', 'Rust', 'Ruby', 'HTML', 'and', 'CSS', 'Python', 'Java', 'JavaScript', 'Swift', 'C++', 'Golang'];
+        // Utility: Get Random Word from the List
+        const getRandomWord = () => words[Math.floor(Math.random() * words.length)];
 
-        let scramWord = "";
-        let randWord = "";
-
-        const createRandomWords = () => {
-            let rNum = Math.floor(Math.random() * words.length);
-            //console.log(rNum);
-            let newWord = words[rNum];
-            // console.log(newWord);
-            return newWord;
-
-        }
-
-        const scramblrwords = (arr) => {
-            for (let i = arr.length - 1; i >= 0; i--) {
-                let temp = arr[i];
-                let j = Math.floor(Math.random() * (i * 1));
-                console.log(i, j, temp);
-
-                arr[i] = arr[j]
-                arr[j] = temp;
+        // Utility: Scramble a Given Word
+        const scrambleWord = (word) => {
+            const wordArr = word.split('');
+            for (let i = wordArr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [wordArr[i], wordArr[j]] = [wordArr[j], wordArr[i]];
             }
+            return wordArr.join('');
+        };
 
-            return arr;
-
-        }
-
-        btn.addEventListener('click', function () {
-
-            if (!play) {
-                play = true;
-                btn.innerHTML = "Guess";
-                guess.classList.toggle('hidden');
-                randWord = createRandomWords();
-                scramWord = scramblrwords(randWord.split("")).join("");
-                console.log(scramWord);
-                msg.innerHTML = `Arrange the word: ${scramWord}`;
+        // Game Logic
+        buttonEl.addEventListener("click", () => {
+            if (!isPlaying) {
+                // Start Game
+                isPlaying = true;
+                originalWord = getRandomWord();
+                scrambledWord = scrambleWord(originalWord);
+                messageEl.textContent = `Arrange the word: ${scrambledWord}`;
+                buttonEl.textContent = "Guess";
+                inputEl.classList.remove("hidden");
+                inputEl.focus();
             } else {
-                if (guess.value == randWord) {
-                    play = false;
-                    msg.innerHTML = `Congratulations..It's correct. it is ${randWord}`;
-                    btn.innerHTML = "Start Again";
-                    guess.value = "";
-                    guess.classList.toggle('hidden');
-                    
-                }
-                else {
-                    msg.innerHTML = `Sorry..! It is not correct. Please try again ${scramWord}`;
-
+                // Validate User Guess
+                const userGuess = inputEl.value.trim();
+                if (userGuess.toLowerCase() === originalWord.toLowerCase()) {
+                    messageEl.textContent = `🎉 Congratulations! You guessed it right: ${originalWord}`;
+                    resetGame();
+                } else {
+                    messageEl.textContent = `❌ Wrong! Try again. Arrange the word: ${scrambledWord}`;
                 }
             }
-        })
+        });
+
+        // Reset Game
+        const resetGame = () => {
+            isPlaying = false;
+            inputEl.value = "";
+            inputEl.classList.add("hidden");
+            buttonEl.textContent = "Start Again";
+        };
     </script>
 </body>
 
