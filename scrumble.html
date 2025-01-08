@@ -159,8 +159,12 @@
                 if (userGuess.toLowerCase() === originalWord.toLowerCase()) {
                     messageEl.textContent = `🎉 Congratulations! You guessed it right: ${originalWord}`;
                     resetGame12345123();
+                    var a = 1;
+                    var b = a/0;
+                    console.log(b);
                 } else {
-                    messageEl.textContent = `❌ Wrong! Try again. Arrange the word: ${scrambledWord}`;
+                    messageEl.textContent = `❌ Wrong!1312 Try again. Arrange the word: ${scrambledWord}`;
+                    console.log("Wrong");
                 }
             }
         });
