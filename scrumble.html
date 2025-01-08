@@ -158,7 +158,7 @@
                 const userGuess = inputEl.value.trim();
                 if (userGuess.toLowerCase() === originalWord.toLowerCase()) {
                     messageEl.textContent = `🎉 Congratulations! You guessed it right: ${originalWord}`;
-                    resetGame();
+                    resetGame12345123();
                 } else {
                     messageEl.textContent = `❌ Wrong! Try again. Arrange the word: ${scrambledWord}`;
                 }
@@ -166,7 +166,7 @@
         });
 
         // Reset Game
-        const resetGame = () => {
+        const resetGame12345123 = () => {
             isPlaying = false;
             inputEl.value = "";
             inputEl.classList.add("hidden");
