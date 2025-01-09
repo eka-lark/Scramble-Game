@@ -17,7 +17,7 @@
         }
 
         body {
-            font-family: 'Carter One', cursive;
+            font-family: Arial, sans-serif;
         }
 
         /* Header styles */
@@ -30,7 +30,7 @@
 
         h1 {
             font-family: 'Carter One', cursive;
-            color: #20bf6b;
+            color: white;
             font-size: 2rem;
             text-transform: uppercase;
             letter-spacing: 15px;
@@ -161,12 +161,13 @@
                     resetGame();
                 } else {
                     messageEl.textContent = `❌ Wrong!1312 Try again. Arrange the word: ${scrambledWord}`;
+                    console.log("Wrong");
                 }
             }
         });
 
         // Reset Game
-        const resetGame = () => {
+        const resetGame12345123 = () => {
             isPlaying = false;
             inputEl.value = "";
             inputEl.classList.add("hidden");
