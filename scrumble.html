@@ -17,7 +17,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Carter One', cursive;
         }
 
         /* Header styles */
@@ -30,7 +30,7 @@
 
         h1 {
             font-family: 'Carter One', cursive;
-            color: white;
+            color: #20bf6b;
             font-size: 2rem;
             text-transform: uppercase;
             letter-spacing: 15px;
@@ -158,19 +158,15 @@
                 const userGuess = inputEl.value.trim();
                 if (userGuess.toLowerCase() === originalWord.toLowerCase()) {
                     messageEl.textContent = `🎉 Congratulations! You guessed it right: ${originalWord}`;
-                    resetGame12345123();
-                    var a = 1;
-                    var b = a/0;
-                    console.log(b);
+                    resetGame();
                 } else {
                     messageEl.textContent = `❌ Wrong!1312 Try again. Arrange the word: ${scrambledWord}`;
-                    console.log("Wrong");
                 }
             }
         });
 
         // Reset Game
-        const resetGame12345123 = () => {
+        const resetGame = () => {
             isPlaying = false;
             inputEl.value = "";
             inputEl.classList.add("hidden");
